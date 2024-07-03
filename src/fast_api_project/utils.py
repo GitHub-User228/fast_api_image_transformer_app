@@ -47,8 +47,6 @@ def download_model():
                                                                    safety_checker=None, 
                                                                    offload_folder="offload", 
                                                                    offload_state_dict = True)
-
-    # Save the model and tokenizer to the specified directory
     model.save_pretrained(os.path.join(PROJECT_PATH, 'models'))
     del model
     torch.cuda.empty_cache()
