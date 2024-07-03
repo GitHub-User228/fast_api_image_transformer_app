@@ -29,7 +29,7 @@ A POST-query consists of two parameters:
 - prompt : prompt in which a neccessary transformation is specified as a string
 - file : a path to a locally located picture
 
-A GET-query returns the transformed picture as a binary file
+A GET-query returns the transformed picture as a binary file or error message as a dict
 
 The transformed image can also be seen via the following link: ```http://127.0.0.1/images```
 
