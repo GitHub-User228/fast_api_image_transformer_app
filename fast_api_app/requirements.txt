@@ -1,0 +1,15 @@
+fastapi==0.111.1
+fastapi-cache2==0.2.1
+fastapi-limiter==0.1.6
+ensure==1.0.4
+opencv-python==4.10.0.84
+torch==2.3.1
+transformers==4.42.4
+diffusers==0.29.2
+aiofiles==24.1.0
+pydantic-settings==2.3.4
+aioredis==2.0.1
+accelerate==0.32.1
+coloredlogs==15.0.1
+pytest==8.3.1
+aiologger==0.7.0

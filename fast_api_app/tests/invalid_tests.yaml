@@ -1,0 +1,68 @@
+# Image related tests
+invalid_image_mime_type:
+    param_name: "image_mime_type"
+    invalid_value: "text/plain"
+    expected_status: 400
+    expected_message: "Invalid image file type"
+invalid_image_extension:
+    param_name: "image_file_name"
+    invalid_value: "image.txt"
+    expected_status: 422
+    expected_message: "Invalid image file extension"
+big_image:
+    param_name: "image_file"
+    invalid_value: "too_big_image.jpg"
+    expected_status: 400
+    expected_message: "Image too large"
+invalid_image_data:
+    param_name: "image_file"
+    invalid_value: "invalid_image_type.jpg"
+    expected_status: 415
+    expected_message: "Unsupported image file type"
+
+# Prompt related tests
+invalid_prompt_mime_type:
+    param_name: "prompt_mime_type"
+    invalid_value: "image/jpeg"
+    expected_status: 400
+    expected_message: "Invalid prompt file type"
+invalid_prompt_extension:
+    param_name: "prompt_file_name"
+    invalid_value: "prompt.jpg"
+    expected_status: 422
+    expected_message: "Invalid prompt file extension"
+big_prompt:
+    param_name: "prompt_file"
+    invalid_value: "too_big_prompt.txt"
+    expected_status: 400
+    expected_message: "Prompt too long"
+unsafe_prompt:
+    param_name: "prompt_file"
+    invalid_value: "unsafe_prompt.txt"
+    expected_status: 400
+    expected_message: "Unsafe prompt"
+    is_path_value: True
+
+# Parameters related tests
+invalid_num_inference_steps:
+    param_name: "num_inference_steps"
+    invalid_value: "invalid"
+    expected_status: 422
+    expected_message: "should be a valid integer"
+    check_msg: True
+invalid_guidance_scale:
+    param_name: "guidance_scale"
+    invalid_value: "invalid"
+    expected_status: 422
+    expected_message: "should be a valid integer"
+    check_msg: True
+unbound_num_inference_steps:
+    param_name: "num_inference_steps"
+    invalid_value: 21
+    expected_status: 400
+    expected_message: "Number of inference steps is out of range"
+unbound_guidance_scale:
+    param_name: "guidance_scale"
+    invalid_value: 21
+    expected_status: 400
+    expected_message: "Image guidance scale is out of range"

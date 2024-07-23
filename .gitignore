@@ -1,4 +1,9 @@
+
+fast_api_app/model
+
 # Byte-compiled / optimized / DLL files
+pyproject.toml
+pyvenv.cfg
 __pycache__/
 *.py[cod]
 *$py.class
@@ -8,6 +13,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+bin
+include
 build/
 develop-eggs/
 dist/
@@ -15,11 +22,12 @@ downloads/
 eggs/
 .eggs/
 lib/
-lib64/
+lib64
 parts/
 sdist/
 var/
 wheels/
+share/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
@@ -120,9 +128,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+#.env
 .venv
-env/
+#env/
 venv/
 ENV/
 env.bak/

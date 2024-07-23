@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  fast_api_app:
+    build: 
+      context: ./fast_api_app
+    tty: true
+    ports: 
+      - '80:80'
+    volumes:
+      - model_data:/home/fast_api_app/model
+      - ./fast_api_app:/home/fast_api_app
+    env_file:
+      - ./fast_api_app/env/.env
+    depends_on:
+      - redis
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes:
+  model_data:

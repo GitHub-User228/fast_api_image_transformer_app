@@ -1,0 +1,44 @@
+constraints:
+    image:
+        # Maximum file size for uploaded images (in bytes)
+        max_file_size: 5242880
+        # Allowed MIME types for images
+        allowed_types: ["image/jpeg", "image/png"]
+        # Allowed file extensions for images
+        allowed_extensions: ["jpeg", "jpg", "png"]
+        # Maximum width for uploaded images (in pixels)
+        max_width: 1536
+        # Maximum height for uploaded images (in pixels)
+        max_height: 1536
+    prompt:
+        # Allowed MIME types for text prompts
+        allowed_types: ["text/plain"]
+        # Allowed file extensions for text prompts
+        allowed_extensions: ["txt"]
+        # Maximum length for text prompts
+        max_length: 256
+    request_rate_limit:
+        global:
+            # Global rate limit: number of requests allowed
+            times: 10
+            # Global rate limit: time window in seconds
+            seconds: 60
+        per_ip:
+            # Per IP rate limit: number of requests allowed
+            times: 2
+            # Per IP rate limit: time window in seconds
+            seconds: 60
+    model:
+        # Minimum and maximum number of inference steps
+        num_inference_steps:
+            min: 1
+            max: 10
+        # Minimum and maximum image guidance scale
+        image_guidance_scale:
+            min: 1
+            max: 20
+model_config:
+    # Hugging Face model checkpoint
+    hf_model_checkpoint: "timbrooks/instruct-pix2pix"
+    # Device to run the model on
+    device: 'cuda'
