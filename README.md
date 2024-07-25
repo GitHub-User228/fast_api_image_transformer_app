@@ -9,13 +9,15 @@
 ![transformers](https://img.shields.io/badge/transformers-green?style=for-the-badge&)
 ![PIL](https://img.shields.io/badge/PIL-red?style=for-the-badge&)
 ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
-
-DL application on FastAPI with Docker for transforming any picture according to the specified prompt
+DL application on FastAPI and Flask with Docker for transforming any picture according to the specified prompt
 
 ## Description
 
-The DL-FastAPI-App is a deep learning application built using FastAPI and Docker. It allows users to transform images based on specified textual prompts. The application leverages state-of-the-art models from Hugging Face to perform image transformations, making it a useful tool for various image processing tasks.
+The DL-FastAPI-App is a deep learning application built using FastAPI, Flask and Docker. It allows users to transform images based on specified textual prompts using the frontend service made via Flask. The application leverages state-of-the-art models from Hugging Face to perform image transformations, making it a useful tool for various image processing tasks.
 
 ## Prerequisites
 
