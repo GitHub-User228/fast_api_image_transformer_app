@@ -49,6 +49,8 @@ Before you begin, ensure you have met the following requirements:
 **[docker-compose.yaml](./docker-compose.yaml)**: This file contains the configuration for the Docker Compose service. It specifies the services and their dependencies:
    - `redis`: The Redis service for caching requests (used for request rate limiting).
    - `fast_api_app`: Service with the FastAPI app, which is built using [Dockerfile](./fast_api_app/Dockerfile)
+   - `frontend`: Service with the Flask frontend, which is built using [Dockerfile](./frontend/Dockerfile)
+
 
 **[fast_api_app](./fast_api_app)**: This directory contains the main FastAPI app and the required code and configuration files
 
