@@ -6,6 +6,8 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+    networks:
+      - app_network
 
   fast_api_app:
     build: 
@@ -27,6 +29,28 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+    networks:
+      - app_network
+
+  flask_service:
+    build:
+      context: ./frontend
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - ./frontend/env/.env
+    depends_on:
+      - fast_api_app
+    networks:
+      - app_network
+
 
 volumes:
   model_data:
+
+networks:
+  app_network:
+    driver: bridge
+

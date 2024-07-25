@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Transformer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Transform Your Image</h1>
+        <form action="/transform" id="transform-form" method="post" enctype="multipart/form-data">
+            <label for="prompt">Prompt:</label>
+            <input type="text" id="prompt" name="prompt" value="{{ form_data.prompt }}" required>
+            <label for="file">Upload Image:</label>
+            <input type="file" id="file" name="file" accept="image/*" required>
+            <div class="slider-label-container">
+                <label for="num_inference_steps">Number of Inference Steps:</label>
+                <output id="num_inference_steps_output">{{ form_data.num_inference_steps }}</output>
+            </div>
+            <div class="slider-container">
+                <input type="range" id="num_inference_steps" name="num_inference_steps" min="1" max="10"
+                    value="{{ form_data.num_inference_steps }}"
+                    oninput="document.getElementById('num_inference_steps_output').value = this.value">
+            </div>
+            <div class="slider-label-container">
+                <label for="image_guidance_scale">Image Guidance Scale:</label>
+                <output id="image_guidance_scale_output">{{ form_data.image_guidance_scale }}</output>
+            </div>
+            <div class="slider-container">
+                <input type="range" id="image_guidance_scale" name="image_guidance_scale" min="0.1" max="3"
+                    value="{{ form_data.image_guidance_scale }}" step="0.1"
+                    oninput="document.getElementById('image_guidance_scale_output').value = this.value">
+            </div>
+            <button type="submit" id="submit-button">Transform</button>
+        </form>
+    </div>
+
+    <div class="new-container">
+        {% if original_image_url and image_url %}
+        <div class="output">
+            <h2>Original Image:</h2>
+            <img src="{{ original_image_url }}" alt="Original Image">
+            <h2>Transformed Image:</h2>
+            <img src="{{ image_url }}" alt="Transformed Image">
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="error-message" id="error-message" onclick="hideError()"></div>
+
+    <script src="/static/js/scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            {% if error_message %}
+            showError("{{ error_message }}");
+            {% endif %}
+        });
+    </script>
+</body>
+
+</html>

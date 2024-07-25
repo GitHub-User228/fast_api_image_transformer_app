@@ -25,7 +25,7 @@ constraints:
             seconds: 60
         per_ip:
             # Per IP rate limit: number of requests allowed
-            times: 2
+            times: 4
             # Per IP rate limit: time window in seconds
             seconds: 60
     model:
@@ -35,8 +35,8 @@ constraints:
             max: 10
         # Minimum and maximum image guidance scale
         image_guidance_scale:
-            min: 1
-            max: 20
+            min: 0.1
+            max: 3
 model_config:
     # Hugging Face model checkpoint
     hf_model_checkpoint: "timbrooks/instruct-pix2pix"

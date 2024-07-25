@@ -8,7 +8,6 @@ from fast_api_project import logger
 from fast_api_project.settings import (
     ImageSettingsDependency,
     PromptSettingsDependency,
-    ModelSettingsDependency,
 )
 from fast_api_project.utils.common import (
     bytes_to_pil_image,
@@ -51,7 +50,7 @@ async def validate_image(
     # Checking if the image content type is in the allowed file types
     if image.content_type not in settings.allowed_file_types:
         message = (
-            f"ERROR 400. Invalid image file type: {image.content_type} "
+            f"Invalid image file type: {image.content_type} "
             f"while allowed image types are "
             f"{list(map(lambda x: x.value, settings.allowed_file_types))}"
         )
@@ -64,7 +63,7 @@ async def validate_image(
         not in settings.allowed_file_extensions
     ):
         message = (
-            f"ERROR 400. Invalid image file extension: {image.filename} "
+            f"Invalid image file extension: {image.filename} "
             f"while allowed extensions are "
             f"{list(map(lambda x: x.value, settings.allowed_file_extensions))}"
         )
@@ -74,7 +73,7 @@ async def validate_image(
     # Checking if the image size is <= maximum allowed file size
     if image.size > settings.max_file_size:
         message = (
-            f"ERROR 400. Image too large: {image.size} bytes while "
+            f"Image too large: {image.size} bytes while "
             f"maximum allowed image size is {settings.max_file_size} bytes"
         )
         logger.error(message)
@@ -122,7 +121,7 @@ async def validate_prompt(
     # Checking if the prompt content type is in the allowed file types
     if prompt.content_type not in settings.allowed_file_types:
         message = (
-            f"ERROR 400. Invalid prompt file type: {prompt.content_type} "
+            f"Invalid prompt file type: {prompt.content_type} "
             f"while allowed file types are "
             f"{list(map(lambda x: x.value, settings.allowed_file_types))}"
         )
@@ -135,7 +134,7 @@ async def validate_prompt(
         in settings.allowed_file_extensions
     ):
         message = (
-            f"ERROR 400. Invalid prompt file extension: {prompt.filename} "
+            f"Invalid prompt file extension: {prompt.filename} "
             f"while allowed extensions are "
             f"{list(map(lambda x: x.value, settings.allowed_file_extensions))}"
         )
@@ -155,7 +154,7 @@ async def validate_prompt(
     # Check if the prompt is too long
     if len(sanitized_prompt) > settings.max_prompt_length:
         message = (
-            f"ERROR 400. Prompt too long: {len(sanitized_prompt)} characters "
+            f"Prompt too long: {len(sanitized_prompt)} characters "
             f"while the maximum allowed length is "
             f"{settings.max_prompt_length} characters"
         )
@@ -171,79 +170,12 @@ async def validate_prompt(
         logger.warning(message)
         raise HTTPException(
             status_code=400,
-            detail="Unsafe prompt. Avoid using characters: <>&;",
+            detail="Unsafe prompt. Avoid using special characters",
         )
 
     return sanitized_prompt
 
 
-async def validate_model_parameters(
-    settings: ModelSettingsDependency,
-    num_inference_steps: int = 10,
-    image_guidance_scale: int = 7,
-) -> dict[int]:
-    """
-    Validates the model parameters based on their values and settings.
-    Specifically, it checks if the number of inference steps and image
-    guidance scale are within the allowed ranges.
-
-    Args:
-        num_inference_steps (int, default 10):
-            The number of inference steps to be validated.
-        image_guidance_scale (int, default 7):
-            The image guidance scale to be validated.
-        settings (ModelSettings):
-            The model settings for the application.
-
-    Returns:
-        dict[int]:
-            A dict containing the validated num_inference_steps and
-            image_guidance_scale.
-    """
-
-    # Check the type of arguments
-    if not isinstance(num_inference_steps, int):
-        message = f"ERROR 400. Number of inference steps must be an integer"
-        logger.error(message)
-        raise HTTPException(status_code=400, detail=message)
-    if not isinstance(image_guidance_scale, int):
-        message = f"ERROR 400. Image guidance scale must be an integer"
-        logger.error(message)
-        raise HTTPException(status_code=400, detail=message)
-
-    # Check if the number of inference steps is within allowed range
-    if (num_inference_steps < settings.min_inference_steps) or (
-        num_inference_steps > settings.max_inference_steps
-    ):
-        message = (
-            f"ERROR 400. Number of inference steps is out of range "
-            f"{settings.min_inference_steps}-"
-            f"{settings.max_inference_steps}"
-        )
-        logger.error(message)
-        raise HTTPException(status_code=400, detail=message)
-
-    # Check if the image guidance scale is within allowed range
-    if (image_guidance_scale < settings.min_image_guidance_scale) or (
-        image_guidance_scale > settings.max_image_guidance_scale
-    ):
-        message = (
-            f"ERROR 400. Image guidance scale is out of range "
-            f"{settings.min_image_guidance_scale}-"
-            f"{settings.max_image_guidance_scale}"
-        )
-        logger.error(message)
-        raise HTTPException(status_code=400, detail=message)
-
-    return {
-        "num_inference_steps": num_inference_steps,
-        "image_guidance_scale": image_guidance_scale,
-    }
-
-
 # Defining the dependencies for the validators
 prompt_validator_dependency = Annotated[str, Depends(validate_prompt)]
 image_validator_dependency = Annotated[Image.Image, Depends(validate_image)]
-model_parameters_validator_dependency = Annotated[
-    dict[int], Depends(validate_model_parameters)
-]

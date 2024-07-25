@@ -61,7 +61,7 @@ class FastAPIHandler:
         prompt: str,
         image: Image.Image,
         num_inference_steps: int,
-        image_guidance_scale: int,
+        image_guidance_scale: float,
     ) -> Image.Image:
         """
         Transforms image
@@ -91,7 +91,7 @@ class FastAPIHandler:
             logger.info(
                 f"Transforming image with prompt: '{prompt}', "
                 f"inference steps: {num_inference_steps}, "
-                f"image guidance scale: {image_guidance_scale}"
+                f"image guidance scale: {image_guidance_scale} "
                 f"image size: {image.size}"
             )
             with torch.no_grad():

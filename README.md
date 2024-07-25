@@ -31,6 +31,7 @@ Before you begin, ensure you have met the following requirements:
 
 - **Image Transformation:** Transform images according to user-defined prompts using advanced deep learning models.
 - **FastAPI Integration:** Provides a robust and high-performance API for handling image transformation requests.
+- **Flask Frontend:** A simple Flask frontend to interact with the FastAPI backend.
 - **Dockerized Deployment:** Easily deploy the application using Docker and Docker Compose.
 - **Caching with Redis:** Utilizes Redis for caching requests to improve performance and enable rate limiting.
 - **Interactive Documentation:** Access interactive API documentation via Swagger UI.
@@ -43,7 +44,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Repository Structure
 
-**[docker-compose.yml](./docker-compose.yaml)**: This file contains the configuration for the Docker Compose service. It specifies the services and their dependencies:
+**[docker-compose.yaml](./docker-compose.yaml)**: This file contains the configuration for the Docker Compose service. It specifies the services and their dependencies:
    - `redis`: The Redis service for caching requests (used for request rate limiting).
    - `fast_api_app`: Service with the FastAPI app, which is built using [Dockerfile](./fast_api_app/Dockerfile)
 
@@ -71,6 +72,23 @@ Before you begin, ensure you have met the following requirements:
 
 8. **[scripts](./fast_api_app/scripts)**: Directory with [entrypoint.sh](./fast_api_app/scripts/entrypoint.sh) script which starts the FastAPI app and [download_model.py](./fast_api_app/scripts/download_model.py) script which downloads the model from Hugging Face and saves it in the corresponding directory at the start of the service (in case it is not present)
 
+**[flask_frontend](./frontend)**: This directory contains the Flask frontend app and the required code and configuration files
+
+1. **[Dockerfile](./frontend/Dockerfile)**: This Dockerfile sets up Ubuntu with Python and all necessary packages [requirements.txt](./fast_api_app/requirements.txt). Then, the frontend service starts with the specified entrypoint
+
+2. **[app.py](./frontend/app.py)**: The main Flask application file that serves the frontend.
+
+3. **[frontend_app](./frontend/src/frontend_app)**: This directory contains Python source code and configuration files requried for the app.
+
+4. **[logs](./frontend/src/logs)**: This directory contains log files
+
+5. **[scripts](./frontend/scripts)**: Directory with [entrypoint.sh](./frontend/scripts/entrypoint.sh) script which starts the Flask frontend app 
+
+6. **[templates](./frontend/templates)**: Directory containing HTML templates for the Flask frontend.
+
+7. **[static](./frontend/static)**: Directory containing static files (CSS, JavaScript) for the Flask frontend.
+
+
 ## Getting Started
 
 In order to start the app, follow the following steps:
@@ -89,9 +107,11 @@ In order to check an interactive documentation, access the following link: ```ht
 
 There you can find specific `curl` commands for sending requests to the app
 
+In order to access frontend service, use the following link: ```http://localhost:5000/transform```
+
 ## Running Tests
 
-To ensure that the application is working correctly, you can run the provided test. Follow these steps to run the tests:
+To ensure that the FastAPI application is working correctly, you can run the provided test. Follow these steps to run the tests:
 
 1. **Build and Start the Services:**
     Ensure that the Docker services are up and running as described in the "Getting Started" section.
@@ -129,7 +149,7 @@ If you encounter any issues while setting up or running the application, here ar
 1. **Docker Compose Build Fails:**
    - **Solution:** Ensure that Docker and Docker Compose are installed correctly. Verify that you have an active internet connection to download necessary images and packages.
 
-2. **Service Fails to Start:**
+2. **FastAPI Service Fails to Start:**
    - **Solution:** Check the logs for any error messages. Logs can be found in the [logs](./fast_api_app/src/logs) directory or in the console inside the corresponding service. Common issues include missing environment variables or incorrect configurations in the [.env](./fast_api_app/env/.env) file or files inside [config](./fast_api_app/src/fast_api_project/config/) directory.
 
 3. **Model Download Issues:**

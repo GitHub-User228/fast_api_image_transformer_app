@@ -231,7 +231,7 @@ def get_response(
     image_file: Path | bytes = Path("valid_image.jpg"),
     prompt_file: Path | str = Path("valid_prompt.txt"),
     num_inference_steps: int | str = 1,
-    guidance_scale: int | str = 1,
+    guidance_scale: float | str = 1,
     image_file_name: str = "image.jpg",
     prompt_file_name: str = "prompt.txt",
     image_mime_type: str = "image/jpeg",
@@ -280,18 +280,18 @@ def get_response(
     else:
         prompt = prompt_file
 
-    # Construct the request files
+    # Construct the request files and data
     files = {
         "image": (image_file_name, image_data, image_mime_type),
         "prompt": (prompt_file_name, prompt, prompt_mime_type),
     }
+    data = {
+        "num_inference_steps": num_inference_steps,
+        "image_guidance_scale": guidance_scale,
+    }
 
     # Response from the API
-    url = (
-        f"/images/?num_inference_steps={num_inference_steps}"
-        f"&image_guidance_scale={guidance_scale}"
-    )
-    response = client.post(url=url, files=files)
+    response = client.post(url="/images", files=files, data=data)
     return response
 
 
@@ -331,7 +331,7 @@ async def bytes_to_pil_image(image: bytes) -> Image.Image:
         )
     except Exception as e:
         message = (
-            f"ERROR 500. Unexpected error occured while converting image"
+            f"Unexpected error occured while converting image"
             f"in the form of bytes to the form of PIL.Image.Image: {str(e)}"
         )
         logger.error(message)

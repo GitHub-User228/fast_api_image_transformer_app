@@ -217,17 +217,17 @@ class ModelSettings(BaseSettings):
         ge=6,
         le=10,
     )
-    min_image_guidance_scale: int = Field(
+    min_image_guidance_scale: float = Field(
         config["constraints"]["model"]["image_guidance_scale"]["min"],
         description="Minimum image guidance scale for the model",
-        ge=1,
-        le=10,
+        ge=0.1,
+        le=1,
     )
-    max_image_guidance_scale: int = Field(
+    max_image_guidance_scale: float = Field(
         config["constraints"]["model"]["image_guidance_scale"]["max"],
         description="Maximum image guidance scale for the model",
-        ge=11,
-        le=20,
+        ge=1,
+        le=3,
     )
     device: Literal["cuda", "cpu"] = Field(
         config["model_config"]["device"],

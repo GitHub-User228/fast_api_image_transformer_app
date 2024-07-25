@@ -54,15 +54,17 @@ invalid_guidance_scale:
     param_name: "guidance_scale"
     invalid_value: "invalid"
     expected_status: 422
-    expected_message: "should be a valid integer"
+    expected_message: "should be a valid number"
     check_msg: True
 unbound_num_inference_steps:
     param_name: "num_inference_steps"
     invalid_value: 21
-    expected_status: 400
-    expected_message: "Number of inference steps is out of range"
+    expected_status: 422
+    expected_message: "Input should be "
+    check_msg: True
 unbound_guidance_scale:
     param_name: "guidance_scale"
     invalid_value: 21
-    expected_status: 400
-    expected_message: "Image guidance scale is out of range"
+    expected_status: 422
+    expected_message: "Input should be "
+    check_msg: True
